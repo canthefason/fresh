@@ -3,12 +3,19 @@ package runner
 import (
 	"io"
 	"os/exec"
+	"strings"
 )
 
 func run() bool {
 	runnerLog("Running...")
 
-	cmd := exec.Command(buildPath())
+	var cmd *exec.Cmd
+	if extArgs() != "" {
+		args := strings.Split(extArgs(), " ")
+		cmd = exec.Command(buildPath(), args...)
+	} else {
+		cmd = exec.Command(buildPath())
+	}
 
 	stderr, err := cmd.StderrPipe()
 	if err != nil {
