@@ -2,12 +2,13 @@ package runner
 
 import (
 	"fmt"
-	"github.com/pilu/config"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/pilu/config"
 )
 
 const (
@@ -18,6 +19,8 @@ const (
 var settings = map[string]string{
 	"config_path":       "./runner.conf",
 	"root":              ".",
+	"watch_dir":         ".",
+	"ext_args":          "",
 	"tmp_path":          "./tmp",
 	"build_name":        "runner-build",
 	"build_log":         "runner-build-errors.log",
@@ -106,6 +109,14 @@ func getenv(key, defaultValue string) string {
 
 func root() string {
 	return settings["root"]
+}
+
+func watchDir() string {
+	return settings["watch_dir"]
+}
+
+func extArgs() string {
+	return settings["ext_args"]
 }
 
 func tmpPath() string {
