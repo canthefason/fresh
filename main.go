@@ -15,13 +15,29 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/pilu/fresh/runner"
 	"os"
+
+	"github.com/canthefason/fresh/runner"
 )
 
 func main() {
 	configPath := flag.String("c", "", "config file path")
+	root := flag.String("r", "", "root build package")
+	watchDir := flag.String("w", "", "directory watched for changes")
+	args := flag.String("a", "", "external arguments for main file")
 	flag.Parse()
+
+	if *root != "" {
+		os.Setenv("RUNNER_ROOT", *root)
+	}
+
+	if *watchDir != "" {
+		os.Setenv("RUNNER_WATCH_DIR", *watchDir)
+	}
+
+	if *args != "" {
+		os.Setenv("RUNNER_EXT_ARGS", *args)
+	}
 
 	if *configPath != "" {
 		if _, err := os.Stat(*configPath); err != nil {
