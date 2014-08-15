@@ -1,10 +1,12 @@
 package runner
 
 import (
-	"github.com/howeyc/fsnotify"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/howeyc/fsnotify"
 )
 
 func watchFolder(path string) {
@@ -36,7 +38,10 @@ func watchFolder(path string) {
 }
 
 func watch() {
-	root := root()
+	root := watchDir()
+	env := os.Getenv("GOPATH")
+	root = fmt.Sprintf("%s/src/%s", env, root)
+
 	filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		if info.IsDir() && !isTmpDir(path) {
 			if len(path) > 1 && strings.HasPrefix(filepath.Base(path), ".") {
