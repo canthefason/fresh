@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/howeyc/fsnotify"
@@ -30,7 +31,12 @@ func watchFolder(path string) {
 		}
 	}()
 
-	watcherLog("Watching %s", path)
+	val := os.Getenv("RUNNER_ENABLE_LOGS")
+	log, _ := strconv.ParseBool(val)
+	if log {
+		watcherLog("Watching %s", path)
+	}
+
 	err = watcher.Watch(path)
 
 	if err != nil {

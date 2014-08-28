@@ -16,6 +16,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/canthefason/fresh/runner"
 )
@@ -25,6 +26,7 @@ func main() {
 	root := flag.String("r", "", "root build package")
 	watchDir := flag.String("w", "", "directory watched for changes")
 	args := flag.String("a", "", "external arguments for main file")
+	log := flag.Bool("d", false, "show logs")
 	flag.Parse()
 
 	if *root != "" {
@@ -37,6 +39,10 @@ func main() {
 
 	if *args != "" {
 		os.Setenv("RUNNER_EXT_ARGS", *args)
+	}
+
+	if *log {
+		os.Setenv("RUNNER_ENABLE_LOGS", strconv.FormatBool(*log))
 	}
 
 	if *configPath != "" {
