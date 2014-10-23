@@ -7,9 +7,7 @@ import (
 )
 
 func initFolders() {
-	runnerLog("InitFolders")
 	path := tmpPath()
-	// runnerLog("mkdir %s", path)
 	err := os.Mkdir(path, 0755)
 	if err != nil {
 		runnerLog(err.Error())

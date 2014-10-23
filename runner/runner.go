@@ -7,8 +7,6 @@ import (
 )
 
 func run() bool {
-	runnerLog("Running...")
-
 	var cmd *exec.Cmd
 	if extArgs() != "" {
 		args := strings.Split(extArgs(), " ")
